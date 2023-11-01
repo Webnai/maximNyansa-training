@@ -1,16 +1,16 @@
 <template>
   <div class="background-container">
-    <h1>All Posts</h1>
-    <div v-for="post in allPosts" :key="post.id">
+    <h1 class="username">user posts</h1>
+    <div >
       <div class="post-container">
-        <div>
+        <div v-for="post in userPosts" :key="post.id">
           <img src="profile-pic.jpeg" class="profile-pic" />
         </div>
         <div>
           <div class="each-post">
             <div class="post-info">
-              <div class="username">willy</div>
-              <div class="post-options">close</div>
+              <div class="username"></div>
+              <div class="post-options">❌</div>
             </div>
           </div>
           <div class="each-post">
@@ -21,7 +21,7 @@
           </div>
           <div class="each-post">
             <div class="post-interact">
-              <div class="likes">❤️{{ post.likes.length }}</div>
+              <!-- <div class="likes">❤️{{ post.likes.length }}</div> -->
               <div class="comment">✍️comments</div>
               <div class="share">🌍Share</div>
             </div>
@@ -37,19 +37,92 @@ import axios from 'axios'
 export default {
   data() {
     return {
-      allPosts: ''
+      userPosts: [],
+      userId: '',
     }
   },
 
   created() {
+    const token = localStorage.getItem('token')
+    console.log(token)
+    // const user_id = jwtDecode(token).id
+    // this.userId = user_id
     axios
-      .get('http://localhost:3000/user/posts')
+      .get('http://localhost:3000/user/posts', { headers: { token } })
       .then((res) => {
-        console.log(res)
+        console.log(res);
+        this.userPosts = res.data.data;
+        console.log(this.userPosts);
       })
       .catch((error) => {
         console.log(error)
-      })
-  }
+      });
+  },    
 }
 </script>
+<style>
+.background-container {
+  background-attachment: fixed;
+  margin: 0;
+}
+h1 {
+  color: white;
+  margin: 0;
+}
+.post-container {
+  /* background:rgba(255, 255, 255, 0.5); */
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 500px;
+  display: flex;
+  overflow-wrap: break-word;
+  margin-left: 40%;
+  margin-bottom: 30px;
+  min-height: min-content;
+}
+.each-post {
+  /* background-color: #fff; */
+  width: 400px;
+}
+
+.profile-pic {
+  width: 100px;
+  border-radius: 50px;
+  margin-top: 15px;
+  margin-right: 10px;
+}
+
+.post-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  color: gray;
+  /* background-color: #fff; */
+}
+
+.post-title {
+  margin: 0;
+}
+
+.post-content {
+  margin-top: 0;
+}
+
+.post-interact {
+  display: flex;
+  justify-content: space-between;
+}
+
+.container {
+  min-height: 100dvh;
+  width: 100%;
+}
+
+.liked {
+  background-color: blue;
+  color: #fff;
+}
+</style>
+

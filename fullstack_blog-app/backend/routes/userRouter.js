@@ -5,17 +5,17 @@ import authUser from "../middleware/authUser.js";
 import postController from "../controllers/postController.js";
 
 const router = express.Router();
-router.get("/posts", authUser.tokenVerification, userController.userPosts);
+router.get("/posts", authUser.tokenVerification, userController.);
 router.post(
   "/login",
   authUser.userInfo,
   userController.loginUser,
   // postController.getAllPost
 );
-router.post("/", userController.registerUser);
-router.put("/:id", userValidation, userController.updateUser);
-router.get("/:id", userController.getUser);
-router.get("/", userController.getAllusers);
-router.delete("/:id", userController.deleteUser);
+router.post("/register", userController.registerUser);
+router.post("/login", userController.loginUser);
+router.put("/get-single-user/:id", userValidation, userController.getUser);
+router.get("/get-all-users", userController.getAllusers);
+router.delete("/delete-user/:id", userController.deleteUser);
 
 export default router;

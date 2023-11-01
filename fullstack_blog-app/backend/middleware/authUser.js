@@ -42,6 +42,7 @@ const userInfo = async (req, res, next) => {
 //verfiy
 const tokenVerification = async (req, res, next) => {
   const token = req.headers.token;
+  console.log(token);
   if (!token) {
     return res.status(404).json({ message: "no token existing" });
   }

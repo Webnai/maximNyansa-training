@@ -57,6 +57,7 @@ export default {
       .then((res) => {
         console.log(res)
         this.allPosts = res.data.allPost
+        console.log(this.allPosts);
       })
       .catch((error) => {
         console.log(error)
